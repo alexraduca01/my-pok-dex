@@ -1,0 +1,50 @@
+$fa-font-path: '../webfonts';
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+
+@import '@fortawesome/fontawesome-free/scss/solid.scss'; 
+@import '@fortawesome/fontawesome-free/scss/regular.scss'; 
+@import '@fortawesome/fontawesome-free/scss/brands.scss';
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+@import './partials/_variables.scss';
+
+.text-light-red{
+    color: var(--light-red);
+}
+
+.bg-light-red{
+    background-color: var(--light-red);
+}
+
+.text-dark-red{
+    color: var(--dark-red);
+}
+
+.bg-dark-red{
+    background-color: var(--dark-red);
+}
+
+.text-poke-blue{
+    color: var(--poke-blue);
+}
+
+.bg-poke-blue{
+    background-color: var(--poke-blue);
+}
+
+.text-light-yellow{
+    color: var(--light-yellow);
+}
+
+.bg-light-yellow{
+    background-color: var(--light-yellow);
+}
+
+.text-dark-yellow{
+    color: var(--dark-yellow);
+}
+
+.bg-dark-yellow{
+    background-color: var(--dark-yellow);
+}
