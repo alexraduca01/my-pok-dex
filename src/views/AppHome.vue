@@ -1,21 +1,23 @@
 <template>
-    <div class="vh-100 w-100 bg-poke-blue d-flex flex-column justify-content-center">
-        <div class="w-100 h-100">
-            <ul class="row list-unstyled h-50 gap-3 mx-0 align-items-center justify-content-center ">
-                <li class="col-2 region-bg p-0 mx-2 mt-3" v-for="item in regions" :class="item.name">
-                    <router-link :to="{ name: item.name }" class="text-decoration-none">
-                        <div class="card-bg d-flex justify-content-center align-items-end h-100 w-100">
-                            <h2 class="text-white pb-5 fs-1">{{ item.label }}</h2>
+    <div class="main-container h-100 w-100 bg-poke-blue pb-3">
+        <div class="text-white bg-primary">
+            Header
+        </div>
+        <div class="container p-0" style="height: 90%;">
+            <div class="row h-100 mt-5 mx-0">
+                <router-link v-for="item in regions" :to="{ name: item.name }" class="col-12 text-decoration-none px-sm-3 my-2 col-md-6 col-lg-4" style="min-height: 200px;">
+                    <div :class="item.name" class="w-100 h-100 region-bg">
+                        <div class="card-bg w-100 h-100 d-flex justify-content-center align-items-center">
+                            <p class="mt-5 pt-5 fs-1 text-white">{{ item.label }}</p>
                         </div>
-                    </router-link>
-                </li>
-            </ul>
+                    </div>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
 import { store } from '../store';
 
     export default {
@@ -60,10 +62,6 @@ import { store } from '../store';
                         label: "Paldea",
                         name: "paldea",
                     },
-                    {
-                        label: "Hisui",
-                        name: "hisui",
-                    },
                 ]
             }
         },
@@ -73,11 +71,9 @@ import { store } from '../store';
 <style lang="scss" scoped>
 .kanto {
     background-image: url('./img/kanto.jpg');
-    background-position: -100px!important;
 }
 .johto {
     background-image: url('./img/johto.jpg');
-    background-position: -350px!important;
 }
 .hoenn {
     background-image: url('./img/hoenn.jpg');
@@ -102,9 +98,6 @@ import { store } from '../store';
 .paldea {
     background-image: url('./img/paldea.jpg');
 }
-.hisui {
-    background-image: url('./img/hisui.jpg');
-}
 .region-bg {
     background-size: cover;
     background-position: center;
@@ -113,8 +106,18 @@ import { store } from '../store';
     border-radius: 35px;
     border: 2px solid white;
 }
+.region-bg:hover .card-bg{
+    background: none;
+}
 .card-bg {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 35px;
+    transition: background 1s linear;
+}
+
+@media screen and (min-width: 991px) {
+    .main-container{
+        height: 100vh!important;
+    }
 }
 </style>
