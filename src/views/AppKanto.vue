@@ -1,18 +1,22 @@
 <template>
-    <div>
+    <div class="w-100 vh-100 overflow-hidden p-3 bg-poke-blue ">
         <h1>Kanto</h1>
         <div class="container">
-            <div class="row">
-                <div class="pokemon-card bg-poke-blue col-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center" v-for="item in pokemons">
-                    <img class="mb-5" :src="item.sprites.other.showdown.front_default" style="height: 75px;" :alt="item.name">
-                    <p class="fs-3 mb-2 m-0 text-white pokemon-name">{{ item.name }}</p>
-                    <ul class="list-unstyled d-flex gap-3">
-                        <li v-for="item in item.types" class="text-white px-3 py-1 rounded-pill" :style="`background-color: ${getBadgeColor(item.type.name)}`">{{ item.type.name }}</li>
-                    </ul>
+            <div class="row pb-5">
+                <div class="col-9 p-0 bg-white pokemon-details" style="height: 90vh;">
+                    <div class="d-flex h-50 justify-content-center align-items-end" :style="`background-color: ${getBadgeColor(pokemons[0]?.types[0].type.name)}`" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+                        <img :src="pokemons[0]?.sprites.other.showdown.front_default" style="height: 150px;" alt="pokemon image">
+                    </div>
+                </div>
+                <div class="col-3 " style="overflow: auto; height: 90vh;">
+                    <div class="pokemon-card px-1 bg-white d-flex justify-content-between align-items-center" v-for="item in pokemons">
+                        <img :src="item.sprites.front_default" style="width: 50px;" :alt="item.name">        
+                        <p class="fs-6 m-0 pokemon-name">{{ item.name }}</p>
+                        <p class="fs-6 m-0 pe-2">Nr. {{ formatDexEntry(item.game_indices[19].game_index) }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -40,7 +44,6 @@ import { store } from '../store';
                     responses.forEach(response => {
                         this.pokemons.push(response.data);
                     });
-
                     console.log(this.pokemons);
                 } catch (error) {
                     console.error("Errore durante le richieste API:", error);
@@ -84,8 +87,16 @@ import { store } from '../store';
                 } else if (type == 'fairy'){
                     return '#D685AD';
                 }
-
             },
+            formatDexEntry(entry){
+                if(entry.toString().length == 1){
+                    return '00' + entry;
+                } else if (entry.toString().length == 2){
+                    return '0' + entry;
+                } else {
+                    return entry;
+                }
+            }
         },
         mounted(){
             this.getPokemons();
@@ -95,9 +106,12 @@ import { store } from '../store';
 
 <style lang="scss" scoped>
 .pokemon-card {
-    border: 2px solid white;
+    border: 2px solid #3B4CCA;
 }
 .pokemon-name{
     text-transform: capitalize;
+}
+.pokemon-details {
+    border-radius: 25px;
 }
 </style>
