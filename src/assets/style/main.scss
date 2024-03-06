@@ -10,41 +10,45 @@ $fa-font-path: '../webfonts';
 @import './partials/_variables.scss';
 
 .text-light-red{
-    color: var(--light-red);
+    color: var(--light-red)!important;
 }
 
 .bg-light-red{
-    background-color: var(--light-red);
+    background-color: var(--light-red)!important;
 }
 
 .text-dark-red{
-    color: var(--dark-red);
+    color: var(--dark-red)!important;
 }
 
 .bg-dark-red{
-    background-color: var(--dark-red);
+    background-color: var(--dark-red)!important;
 }
 
 .text-poke-blue{
-    color: var(--poke-blue);
+    color: var(--poke-blue)!important;
 }
 
 .bg-poke-blue{
-    background-color: var(--poke-blue);
+    background-color: var(--poke-blue)!important;
 }
 
 .text-light-yellow{
-    color: var(--light-yellow);
+    color: var(--light-yellow)!important;
 }
 
 .bg-light-yellow{
-    background-color: var(--light-yellow);
+    background-color: var(--light-yellow)!important;
 }
 
 .text-dark-yellow{
-    color: var(--dark-yellow);
+    color: var(--dark-yellow)!important;
 }
 
 .bg-dark-yellow{
-    background-color: var(--dark-yellow);
+    background-color: var(--dark-yellow)!important;
+}
+
+.bg-gray {
+    background-color: darkgray!important;
 }

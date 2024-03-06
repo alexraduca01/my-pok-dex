@@ -1,15 +1,16 @@
 <template>
-    <div class="w-100 vh-100 overflow-hidden p-3 bg-poke-blue ">
+    <div class="w-100 vh-100 overflow-hidden p-3 bg-poke-blue position-relative">
         <h1>Kanto</h1>
         <div class="container">
-            <div class="row pb-5">
-                <div class="col-9 p-0 bg-white pokemon-details" style="height: 90vh;">
-                    <div class="d-flex h-50 justify-content-center align-items-end" :style="`background-color: ${getBadgeColor(pokemons[0]?.types[0].type.name)}`" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
-                        <img :src="pokemons[0]?.sprites.other.showdown.front_default" style="height: 150px;" alt="pokemon image">
+            <div class="row pb-5 justify-content-between">
+                <div class="col-7 p-0 bg-white pokemon-details position-relative" style="height: 90vh;">
+                    <img src="/img/pokeball.png" alt="pokeball" style="position: absolute; top: 30%; right: 5%; z-index: 1;">
+                    <div class="d-flex h-50 justify-content-center align-items-end position-relative" :style="`background-color: ${getBadgeColor(pokemons[activeIndex]?.types[0].type.name)}`" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+                        <img :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative" style="width: 200px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
                     </div>
                 </div>
                 <div class="col-3 " style="overflow: auto; height: 90vh;">
-                    <div class="pokemon-card px-1 bg-white d-flex justify-content-between align-items-center" v-for="item in pokemons">
+                    <div class="pokemon-card px-1 d-flex justify-content-between bg-white align-items-center cursor-pointer" :class="activePokemon(item.game_indices[19].game_index)" v-for="item in pokemons" @click="changePokemon(item.game_indices[19].game_index), activePokemon(item.game_indices[19].game_index)">
                         <img :src="item.sprites.front_default" style="width: 50px;" :alt="item.name">        
                         <p class="fs-6 m-0 pokemon-name">{{ item.name }}</p>
                         <p class="fs-6 m-0 pe-2">Nr. {{ formatDexEntry(item.game_indices[19].game_index) }}</p>
@@ -29,6 +30,7 @@ import { store } from '../store';
             return {
                 store,
                 pokemons: [],
+                activeIndex: 0,
             }
         },
         methods: {
@@ -96,6 +98,18 @@ import { store } from '../store';
                 } else {
                     return entry;
                 }
+            },
+            changePokemon(entry){
+                for(let i = 0; i < this.pokemons.length; i++){
+                    if(this.pokemons[i].game_indices[19].game_index == entry){
+                        this.activeIndex = i;
+                    }
+                }
+            },
+            activePokemon(entry){
+                if(this.pokemons[this.activeIndex].game_indices[19].game_index == entry){
+                    return 'bg-gray';
+                }
             }
         },
         mounted(){
@@ -113,5 +127,8 @@ import { store } from '../store';
 }
 .pokemon-details {
     border-radius: 25px;
+}
+.cursor-pointer {
+    cursor: pointer;
 }
 </style>
