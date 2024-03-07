@@ -3,10 +3,13 @@
         <h1>Kanto</h1>
         <div class="container">
             <div class="row pb-5 justify-content-between">
-                <div class="col-7 p-0 bg-white pokemon-details position-relative" style="height: 90vh;">
-                    <img src="/img/pokeball.png" alt="pokeball" style="position: absolute; top: 30%; right: 5%; z-index: 1;">
-                    <div class="d-flex h-50 justify-content-center align-items-end position-relative" :style="`background-color: ${getBadgeColor(pokemons[activeIndex]?.types[0].type.name)}`" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+                <div class="col-7 p-0 pokemon-details position-relative" :style="`background-color: ${getBadgeColor(pokemons[activeIndex]?.types[0].type.name)}`" style="height: 90vh;">
+                    <img src="/img/pokeball.png" alt="pokeball" style="position: absolute; top: 35%; right: 0; z-index: 1; width: 200px;">
+                    <div class="d-flex h-50 justify-content-center align-items-end position-relative" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
                         <img :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative" style="width: 200px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
+                    </div>
+                    <div class="h-50 bg-white position-relative " style="z-index: 2;">
+
                     </div>
                 </div>
                 <div class="col-3 " style="overflow: auto; height: 90vh;">
