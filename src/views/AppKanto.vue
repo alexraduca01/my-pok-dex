@@ -5,11 +5,22 @@
             <div class="row pb-5 justify-content-between">
                 <div class="col-7 p-0 pokemon-details position-relative" :style="`background-color: ${getBadgeColor(pokemons[activeIndex]?.types[0].type.name)}`" style="height: 90vh;">
                     <img src="/img/pokeball.png" alt="pokeball" style="position: absolute; top: 35%; right: 0; z-index: 1; width: 200px;">
-                    <div class="d-flex h-50 justify-content-center align-items-end position-relative" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
-                        <img :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative" style="width: 200px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
+                    <div class="d-flex h-50 flex-column justify-content-between position-relative" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+                        <div class="d-flex justify-content-end">
+                            <div>
+                                <h2 class="pokemon-name text-white p-3 fs-1">{{ pokemons[activeIndex]?.name }}</h2>
+                            </div>
+                        </div>
+                        <img :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative align-self-center" style="width: 200px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
                     </div>
-                    <div class="h-50 bg-white position-relative " style="z-index: 2;">
-
+                    <div class="h-50 bg-white position-relative p-5" style="z-index: 2; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">
+                        <ul class="list-unstyled d-flex justify-content-center align-items-center mt-3 gap-3">
+                            <li v-for="item in pokemons[activeIndex]?.types" class="rounded-pill px-3 py-1 text-white" :style="`background-color: ${getBadgeColor(item.type.name)}`">{{ item.type.name }}</li>
+                        </ul>
+                        <div class="h-50 desc p-3">
+                            <p>Height: {{ pokemons[activeIndex]?.height }}0 cm</p>
+                            <p>Weight: {{ pokemons[activeIndex]?.weight }}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-3 " style="overflow: auto; height: 90vh;">
@@ -113,7 +124,7 @@ import { store } from '../store';
                 if(this.pokemons[this.activeIndex].game_indices[19].game_index == entry){
                     return 'bg-gray';
                 }
-            }
+            },
         },
         mounted(){
             this.getPokemons();
@@ -133,5 +144,10 @@ import { store } from '../store';
 }
 .cursor-pointer {
     cursor: pointer;
+}
+.desc{
+    background-color: lightgray;
+    border: 2px solid black;
+    border-radius: 25px;
 }
 </style>
