@@ -11,15 +11,20 @@
                                 <h2 class="pokemon-name text-white p-3 fs-1">{{ pokemons[activeIndex]?.name }}</h2>
                             </div>
                         </div>
-                        <img :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative align-self-center" style="width: 200px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
+                        <img :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
                     </div>
                     <div class="h-50 bg-white position-relative p-5" style="z-index: 2; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">
                         <ul class="list-unstyled d-flex justify-content-center align-items-center mt-3 gap-3">
                             <li v-for="item in pokemons[activeIndex]?.types" class="rounded-pill px-3 py-1 text-white" :style="`background-color: ${getBadgeColor(item.type.name)}`">{{ item.type.name }}</li>
                         </ul>
-                        <div class="h-50 desc p-3">
-                            <p>Height: {{ pokemons[activeIndex]?.height }}0 cm</p>
-                            <p>Weight: {{ pokemons[activeIndex]?.weight }}</p>
+                        <div class="h-50 desc p-3 d-flex justify-content-between ">
+                            <div>
+                                <p>Height: {{ pokemons[activeIndex]?.height }}0 cm</p>
+                                <p>Weight: {{ formatNumber(pokemons[activeIndex]?.weight) }} Kg</p>
+                            </div>
+                            <div>
+                                <Radar :key="radarChartKey"  ref="radarChart" :data="radarChartData" :options="options" v-if="radarChartData.labels"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -38,13 +43,84 @@
 <script>
 import axios from 'axios';
 import { store } from '../store';
+
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+} from 'chart.js'
+import { Radar } from 'vue-chartjs';
+
+ChartJS.register(
+    RadialLinearScale,
+    PointElement,
+    LineElement,
+    Filler,
+    Tooltip,
+    Legend
+)
+
     export default {
         name: 'AppKanto',
+        components: {
+            Radar
+        },
         data(){
             return {
                 store,
                 pokemons: [],
                 activeIndex: 0,
+                radarChartKey: 0,
+                radarChartData: {
+                    labels: [
+                        'HP',
+                        'Attack',
+                        'Defense',
+                        'Special Attack',
+                        'Special Defense',
+                        'Speed',
+                    ],
+                    datasets: [],
+                },
+                data: {
+                    labels: [
+                        'HP',
+                        'Attack',
+                        'Defense',
+                        'Special-Attack',
+                        'Special-Defense',
+                        'Speed',
+                    ],
+                    datasets: [
+                        {
+                            label: 'Stats',
+                            backgroundColor: 'rgba(179,181,198,0.2)',
+                            borderColor: 'rgba(179,181,198,1)',
+                            pointBackgroundColor: 'rgba(179,181,198,1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(179,181,198,1)',
+                            data: [0, 0, 0, 0, 0, 0],
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 150,
+                            ticks: {
+                                display: false
+                            }
+                        }
+                    }
+                }
             }
         },
         methods: {
@@ -60,7 +136,7 @@ import { store } from '../store';
                     responses.forEach(response => {
                         this.pokemons.push(response.data);
                     });
-                    console.log(this.pokemons);
+                    // console.log(this.pokemons);
                 } catch (error) {
                     console.error("Errore durante le richieste API:", error);
                 }
@@ -114,20 +190,59 @@ import { store } from '../store';
                 }
             },
             changePokemon(entry){
-                for(let i = 0; i < this.pokemons.length; i++){
-                    if(this.pokemons[i].game_indices[19].game_index == entry){
-                        this.activeIndex = i;
-                    }
+                const selectedPokemon = this.pokemons.find(pokemon => pokemon.game_indices && pokemon.game_indices[19].game_index === entry);
+                if (selectedPokemon) {
+                    this.activeIndex = this.pokemons.indexOf(selectedPokemon);
+                    if (selectedPokemon.stats) {
+                        this.radarChartData.labels = [
+                            'HP',
+                            'Attack',
+                            'Defense',
+                            'Special Attack',
+                            'Special Defense',
+                            'Speed',
+                        ];
+                        this.radarChartData.datasets = [{
+                            label: 'Stats',
+                            data: selectedPokemon.stats.map(stat => stat.base_stat),
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                        }];
+                        this.radarChartKey++;
+                    }   
                 }
+            },
+            renderRadarChart() {
+            new Radar(this.$refs.radarChart, {
+                data: this.radarChartData,
+                options: this.options
+            });
             },
             activePokemon(entry){
                 if(this.pokemons[this.activeIndex].game_indices[19].game_index == entry){
                     return 'bg-gray';
                 }
             },
+            formatNumber(number){
+                let stringNumber = number?.toString();
+                if(stringNumber?.length > 1){
+                    let integer = stringNumber.slice(0, -1);
+                    let lastNumber = stringNumber.slice(-1);
+                    return integer.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "," + lastNumber;
+                } else {
+                    return stringNumber
+                }
+            }
         },
         mounted(){
             this.getPokemons();
+            this.getPokemons().then(() => {
+                if (this.pokemons.length > 0) {
+                    // Imposta il primo Pokémon come attivo all'avvio
+                    this.changePokemon(this.pokemons[0].game_indices[19].game_index);
+                }
+            });
         }
     }
 </script>
