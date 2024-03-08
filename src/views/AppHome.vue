@@ -1,8 +1,6 @@
 <template>
     <div class="main-container h-100 w-100 bg-poke-blue pb-3">
-        <div class="text-white bg-primary">
-            Header
-        </div>
+        <AppHeader />
         <div class="container p-0" style="height: 90%;">
             <div class="row h-100 mt-5 mx-0">
                 <router-link v-for="item in regions" :regionName="item.label" @click="getRegionName(item.label)" :to="{ name: item.name }" class="col-12 text-decoration-none px-sm-3 my-2 col-md-6 col-lg-3" style="min-height: 200px;">
@@ -19,9 +17,13 @@
 
 <script>
 import { store } from '../store';
+import AppHeader from '../components/AppHeader.vue';
 
     export default {
         name: 'AppHome',
+        components: {
+            AppHeader,
+        },
         data() {
             return {
                 store,
