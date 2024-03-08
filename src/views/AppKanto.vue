@@ -1,26 +1,37 @@
 <template>
     <div class="w-100 vh-100 overflow-hidden p-3 bg-poke-blue position-relative">
-        <h1>Kanto</h1>
-        <div class="container">
-            <div class="row pb-5 justify-content-between">
+        <h1 class="m-0">Kanto</h1>
+        <div class="container bg-dark-red p-4">
+            <div class="row justify-content-around">
                 <div class="col-7 p-0 pokemon-details position-relative" :style="`background-color: ${getBadgeColor(pokemons[activeIndex]?.types[0].type.name)}`" style="height: 90vh;">
                     <img src="/img/pokeball.png" alt="pokeball" style="position: absolute; top: 35%; right: 0; z-index: 1; width: 200px;">
                     <div class="d-flex h-50 flex-column justify-content-between position-relative" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-check form-switch ms-3">
+                                <input @click="getShiny()" class="form-check-input cursor-pointer" type="checkbox">
+                                <label class="form-check-label" for="flexSwitchCheckDefault"><img src="/img/shiny.png" style="width: 25px;"></label>
+                            </div>
                             <div>
                                 <h2 class="pokemon-name text-white p-3 fs-1">{{ pokemons[activeIndex]?.name }}</h2>
                             </div>
                         </div>
-                        <img :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
+                        <img v-if="!shiny" :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
+                        <img v-else :src="pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_shiny" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
                     </div>
                     <div class="h-50 bg-white position-relative p-5" style="z-index: 2; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">
                         <ul class="list-unstyled d-flex justify-content-center align-items-center mt-3 gap-3">
-                            <li v-for="item in pokemons[activeIndex]?.types" class="rounded-pill px-3 py-1 text-white" :style="`background-color: ${getBadgeColor(item.type.name)}`">{{ item.type.name }}</li>
+                            <li v-for="item in pokemons[activeIndex]?.types" class="rounded-pill text-uppercase px-3 py-1 text-white" :style="`background-color: ${getBadgeColor(item.type.name)}`">{{ item.type.name }}</li>
                         </ul>
                         <div class="h-50 desc p-3 d-flex justify-content-between ">
-                            <div>
-                                <p>Height: {{ pokemons[activeIndex]?.height }}0 cm</p>
-                                <p>Weight: {{ formatNumber(pokemons[activeIndex]?.weight) }} Kg</p>
+                            <div class="d-flex flex-column justify-content-around">
+                                <div>
+                                    <p class="m-0">Height: {{ pokemons[activeIndex]?.height }}0 cm</p>
+                                    <p>Weight: {{ formatNumber(pokemons[activeIndex]?.weight) }} Kg</p>
+                                </div>
+                                <ul class="list-unstyled">
+                                    <li class="fs-5">Abilities:</li>
+                                    <li v-for="item in pokemons[activeIndex]?.abilities">{{ item.ability.name }}</li>
+                                </ul>
                             </div>
                             <div>
                                 <Radar :key="radarChartKey"  ref="radarChart" :data="radarChartData" :options="options" v-if="radarChartData.labels"/>
@@ -75,6 +86,7 @@ ChartJS.register(
                 pokemons: [],
                 activeIndex: 0,
                 radarChartKey: 0,
+                shiny: false,
                 radarChartData: {
                     labels: [
                         'HP',
@@ -233,6 +245,9 @@ ChartJS.register(
                 } else {
                     return stringNumber
                 }
+            },
+            getShiny(){
+                this.shiny = !this.shiny;
             }
         },
         mounted(){
@@ -249,7 +264,7 @@ ChartJS.register(
 
 <style lang="scss" scoped>
 .pokemon-card {
-    border: 2px solid #3B4CCA;
+    border: 2px solid #CC0000;
 }
 .pokemon-name{
     text-transform: capitalize;
