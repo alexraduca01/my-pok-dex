@@ -73,7 +73,9 @@ import AppHeader from '../components/AppHeader.vue';
         },
         methods: {
             getRegionName(name) {
+                store.regionName = '';
                 store.regionName = name;
+                store.pokemons = [];
             }
         }
     }
