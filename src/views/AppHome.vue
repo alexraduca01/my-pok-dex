@@ -5,7 +5,7 @@
         </div>
         <div class="container p-0" style="height: 90%;">
             <div class="row h-100 mt-5 mx-0">
-                <router-link v-for="item in regions" :regionName="item.label" :to="{ name: item.name }" class="col-12 text-decoration-none px-sm-3 my-2 col-md-6 col-lg-3" style="min-height: 200px;">
+                <router-link v-for="item in regions" :regionName="item.label" @click="getRegionName(item.label)" :to="{ name: item.name }" class="col-12 text-decoration-none px-sm-3 my-2 col-md-6 col-lg-3" style="min-height: 200px;">
                     <div :class="item.name" class="w-100 h-100 region-bg">
                         <div class="card-bg w-100 h-100 d-flex justify-content-center align-items-center">
                             <p class="mt-5 pt-5 fs-1 text-white">{{ item.label }}</p>
@@ -70,6 +70,9 @@ import { store } from '../store';
             }
         },
         methods: {
+            getRegionName(name) {
+                store.regionName = name;
+            }
         }
     }
 </script>
