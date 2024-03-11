@@ -1,28 +1,45 @@
 <template>
-    <div class="main-container h-100 w-100 bg-poke-blue pb-3">
+    <div class="main-container vh-100 w-100 bg-poke-blue pb-3 overflow-hidden ">
         <AppHeader />
         <div class="container p-0" style="height: 90%;">
-            <div class="row h-100 mt-5 mx-0">
-                <router-link v-for="item in regions" :regionName="item.label" @click="getRegionName(item.label)" :to="{ name: item.name }" class="col-12 text-decoration-none px-sm-3 my-2 col-md-6 col-lg-3" style="min-height: 200px;">
-                    <div :class="item.name" class="w-100 h-100 region-bg">
-                        <div class="card-bg w-100 h-100 d-flex justify-content-center align-items-center">
-                            <p class="mt-5 pt-5 fs-1 text-white">{{ item.label }}</p>
-                        </div>
-                    </div>
-                </router-link>
+            <div class="row h-100 mt-5 mx-0 pt-5">
+                <swiper :effect="'cards'" :grabCursor="true" :modules="modules" :loop="true" class="mySwiper" >
+                    <swiper-slide v-for="item in regions" style="border-radius: 25px;">
+                        <router-link :regionName="item.label" @click="getRegionName(item.label)" :to="{ name: item.name }" class="text-decoration-none">
+                                <div :class="item.name" class="w-100 h-100 region-bg">
+                                    <div class="card-bg w-100 h-100 d-flex justify-content-center align-items-center">
+                                        <p class="mt-5 pt-5 fs-1 text-white">{{ item.label }}</p>
+                                    </div>
+                                </div>
+                        </router-link>
+                    </swiper-slide>
+                </swiper>
             </div>
         </div>
     </div>
+
+    
+
 </template>
 
 <script>
 import { store } from '../store';
 import AppHeader from '../components/AppHeader.vue';
 
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+import 'swiper/css';
+
+import 'swiper/css/effect-cards';
+
+import { EffectCards } from 'swiper/modules';
+
     export default {
         name: 'AppHome',
         components: {
             AppHeader,
+            Swiper,
+            SwiperSlide,
         },
         data() {
             return {
@@ -68,7 +85,8 @@ import AppHeader from '../components/AppHeader.vue';
                         label: "Paldea",
                         name: "paldea",
                     },
-                ]
+                ],
+                modules: [EffectCards],
             }
         },
         methods: {
@@ -77,6 +95,9 @@ import AppHeader from '../components/AppHeader.vue';
                 store.regionName = name;
                 store.pokemons = [];
             }
+        },
+        mounted(){
+            store.regionName = '';
         }
     }
 </script>
