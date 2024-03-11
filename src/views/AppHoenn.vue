@@ -5,7 +5,7 @@
     <div v-else>
         <AppHeader />
         <div class="w-100 main-container overflow-hidden p-3 bg-poke-blue position-relative">
-            <div class="container bg-light-red p-4">
+            <div class="container rounded-5 bg-light-red p-4">
                 <div class="row justify-content-around">
                     <div class="col-7 p-0 pokemon-details position-relative" :style="`background-color: ${getBadgeColor(store.pokemons[activeIndex]?.types[0].type.name)}`" style="height: 90vh;">
                         <img src="/img/pokeball.png" alt="pokeball" style="position: absolute; top: 35%; right: 0; z-index: 1; width: 200px;">
@@ -135,7 +135,7 @@ ChartJS.register(
                     scales: {
                         r: {
                             min: 0,
-                            max: 160,
+                            max: 200,
                             ticks: {
                                 display: false
                             }

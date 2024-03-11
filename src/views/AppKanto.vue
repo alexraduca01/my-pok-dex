@@ -135,7 +135,7 @@ ChartJS.register(
                     scales: {
                         r: {
                             min: 0,
-                            max: 160,
+                            max: 200,
                             ticks: {
                                 display: false
                             }
