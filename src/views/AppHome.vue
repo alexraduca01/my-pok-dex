@@ -46,42 +46,47 @@ import { EffectCards } from 'swiper/modules';
                 store,
                 regions: [
                     {
-                        id: 2,
+                        id: 1,
                         label: "Kanto",
                         name: "kanto",
                     },
                     {
-                        id: 3,
+                        id: 2,
                         label: "Johto",
                         name: "johto",
                     },
                     {
-                        id: 4,
+                        id: 3,
                         label: "Hoenn",
                         name: "hoenn",
                     },
                     {
-                        id: 5,
+                        id: 4,
                         label: "Sinnoh",
                         name: "sinnoh",
                     },
                     {
-                        id: 9,
+                        id: 5,
                         label: "Unova",
                         name: "unova",
                     },
                     {
-                        id: 21,
+                        id: 6,
+                        label: "Kalos",
+                        name: "kalos",
+                    },
+                    {
+                        id: 7,
                         label: "Alola",
                         name: "alola",
                     },
                     {
-                        id: 27,
+                        id: 8,
                         label: "Galar",
                         name: "galar",
                     },
                     {
-                        id: 31,
+                        id: 9,
                         label: "Paldea",
                         name: "paldea",
                     },
