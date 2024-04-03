@@ -19,8 +19,8 @@
                                     <h2 class="pokemon-name text-white p-3 fs-1">{{ store.pokemons[activeIndex]?.name }}</h2>
                                 </div>
                             </div>
-                            <img v-if="!shiny" :src="store.pokemons[activeIndex]?.sprites.versions['generation-vii']['ultra-sun-ultra-moon'].front_default" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
-                            <img v-else :src="store.pokemons[activeIndex]?.sprites.versions['generation-vii']['ultra-sun-ultra-moon'].front_shiny" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
+                            <img v-if="!shiny" :src="store.pokemons[activeIndex]?.sprites.other.showdown.front_default" class="position-relative align-self-center" style="width: 250px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
+                            <img v-else :src="store.pokemons[activeIndex]?.sprites.other.showdown.front_shiny" class="position-relative align-self-center" style="width: 250px; transform: translateY(50px); z-index: 1000;" alt="pokemon image">
                         </div>
                         <div class="h-50 bg-white position-relative p-5" style="z-index: 2; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">
                             <ul class="list-unstyled d-flex justify-content-center align-items-center mt-3 gap-3">
