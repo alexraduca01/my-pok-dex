@@ -2,8 +2,8 @@
     <div class="main-container vh-100 w-100 bg-poke-blue pb-3 overflow-hidden ">
         <AppHeader />
         <div class="container p-0" style="height: 90%;">
-            <div class="row h-100 mt-5 mx-0 pt-5">
-                <swiper :effect="'cards'" :grabCursor="true" :modules="modules" :loop="true" class="mySwiper" >
+            <div class="row h-50 my-3 mx-0">
+                <swiper :effect="'cards'" :grabCursor="true" :modules="modules" :loop="true" class="mySwiper h-100">
                     <swiper-slide v-for="item in regions" style="border-radius: 25px;">
                         <router-link :regionName="item.label" @click="getRegionName(item.label)" :to="{ name: item.name }" class="text-decoration-none">
                                 <div :class="item.name" class="w-100 h-100 region-bg">
@@ -14,6 +14,17 @@
                         </router-link>
                     </swiper-slide>
                 </swiper>
+            </div>
+            <div class="row h-50 mt-3">
+                <div class="w-100 d-flex justify-content-center">
+                    <router-link to="/national" class="text-decoration-none h-100" style="width: 32%;">
+                        <div class="w-100 h-100 region-bg national">
+                            <div class="card-bg h-100 w-100 d-flex justify-content-center align-items-center">
+                                <p class="mt-5 fs-1 text-white">National</p>
+                            </div>
+                        </div>
+                    </router-link>
+                </div>
             </div>
         </div>
     </div>
@@ -136,6 +147,9 @@ import { EffectCards } from 'swiper/modules';
 }
 .paldea {
     background-image: url('./img/paldea.jpg');
+}
+.national {
+    background-image: url('./img/national.jpg');
 }
 .region-bg {
     background-size: cover;
