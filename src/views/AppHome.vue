@@ -17,7 +17,7 @@
             </div>
             <div class="row h-50 mt-3">
                 <div class="w-100 d-flex justify-content-center">
-                    <router-link to="/national" class="text-decoration-none h-100" style="width: 32%;">
+                    <router-link to="/national" class="text-decoration-none h-100" style="width: 32%;" @click="getRegionName('National')">
                         <div class="w-100 h-100 region-bg national">
                             <div class="card-bg h-100 w-100 d-flex justify-content-center align-items-center">
                                 <p class="mt-5 fs-1 text-white">National</p>

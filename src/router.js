@@ -10,6 +10,7 @@ import AppAlola from './views/AppAlola.vue'
 import AppGalar from './views/AppGalar.vue'
 import AppPaldea from './views/AppPaldea.vue'
 import AppHisui from './views/AppHisui.vue'
+import AppNational from './views/AppNational.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,9 +66,9 @@ const router = createRouter({
       component: AppPaldea
     },
     {
-      path: '/hisui',
-      name: 'hisui',
-      component: AppHisui
+      path: '/national',
+      name: 'national',
+      component: AppNational
     },
   ]
 })
