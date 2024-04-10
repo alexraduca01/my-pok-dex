@@ -7,6 +7,7 @@
         <div class="w-100 main-container overflow-hidden p-3 bg-poke-blue position-relative">
             <div class="container bg-light-red p-4">
                 <div class="row justify-content-around">
+                    <!-- single pokèmon card -->
                     <div class="col-7 p-0 pokemon-details position-relative shadow" :style="`background-color: ${getBadgeColor(store.pokemons[activeIndex]?.types[0].type.name)}`" style="height: 90vh;">
                         <img src="/img/pokeball.png" alt="pokeball" style="position: absolute; top: 35%; right: 0; z-index: 1; width: 200px;">
                         <div class="d-flex h-50 flex-column justify-content-between position-relative" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
@@ -43,6 +44,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- pokèmons list -->
                     <div class="col-3 " style="overflow: auto; height: 90vh;">
                         <div class="pokemon-card px-1 d-flex justify-content-between bg-white align-items-center cursor-pointer" :class="activePokemon(item.game_indices[2].game_index)" v-for="item in store.pokemons" @click="changePokemon(item.game_indices[2].game_index), activePokemon(item.game_indices[2].game_index)">
                             <img :src="item.sprites.front_default" style="width: 50px; filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.5))" :alt="item.name">        
