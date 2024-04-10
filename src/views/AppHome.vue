@@ -2,7 +2,7 @@
     <div class="main-container vh-100 w-100 bg-poke-blue pb-3 overflow-hidden ">
         <AppHeader />
         <div class="container p-0" style="height: 90%;">
-            <div class="row h-50 my-3 mx-0">
+            <div class="row h-75 my-5 py-5 mx-0">
                 <swiper :effect="'cards'" :grabCursor="true" :modules="modules" :loop="true" class="mySwiper h-100">
                     <swiper-slide v-for="item in regions" style="border-radius: 25px;">
                         <router-link :regionName="item.label" @click="getRegionName(item.label)" :to="{ name: item.name }" class="text-decoration-none">
@@ -14,17 +14,6 @@
                         </router-link>
                     </swiper-slide>
                 </swiper>
-            </div>
-            <div class="row h-50 mt-3">
-                <div class="w-100 d-flex justify-content-center">
-                    <router-link to="/national" class="text-decoration-none h-100" style="width: 32%;" @click="getRegionName('National')">
-                        <div class="w-100 h-100 region-bg national">
-                            <div class="card-bg h-100 w-100 d-flex justify-content-center align-items-center">
-                                <p class="mt-5 fs-1 text-white">National</p>
-                            </div>
-                        </div>
-                    </router-link>
-                </div>
             </div>
         </div>
     </div>
@@ -101,6 +90,11 @@ import { EffectCards } from 'swiper/modules';
                         label: "Paldea",
                         name: "paldea",
                     },
+                    {
+                        id: 10,
+                        label: "National",
+                        name: "national",
+                    }
                 ],
                 modules: [EffectCards],
             }
