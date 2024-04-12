@@ -87,7 +87,7 @@ ChartJS.register(
 )
 
     export default {
-        name: 'AppSinnoh',
+        name: 'AppPokèdex',
         components: {
             Radar,
             AppHeader,
