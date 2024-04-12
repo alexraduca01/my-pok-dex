@@ -20,8 +20,8 @@
                                     <h2 class="pokemon-name text-white p-3 fs-1">{{ store.pokemons[activeIndex]?.name }}</h2>
                                 </div>
                             </div>
-                            <img v-if="!shiny" :src="store.pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_default" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000; filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.5));" alt="pokemon image">
-                            <img v-else :src="store.pokemons[activeIndex]?.sprites.versions['generation-v']['black-white'].animated.front_shiny" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000; filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.5));" alt="pokemon image">
+                            <img v-if="!shiny" :src="store.pokemons[activeIndex]?.sprites.other.home.front_default" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000; filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.5));" alt="pokemon image">
+                            <img v-else :src="store.pokemons[activeIndex]?.sprites.other.home.front_shiny" class="position-relative align-self-center" style="width: 300px; transform: translateY(50px); z-index: 1000; filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.5));" alt="pokemon image">
                         </div>
                         <div class="h-50 bg-white position-relative p-5" style="z-index: 2; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">
                             <ul class="list-unstyled d-flex justify-content-center align-items-center mt-3 gap-3">
@@ -46,10 +46,12 @@
                     </div>
                     <!-- pokèmons list -->
                     <div class="col-3 " style="overflow: auto; height: 90vh;">
-                        <div class="pokemon-card px-1 d-flex justify-content-between bg-white align-items-center cursor-pointer" :class="activePokemon(item.game_indices[2].game_index)" v-for="item in store.pokemons" @click="changePokemon(item.game_indices[2].game_index), activePokemon(item.game_indices[2].game_index)">
-                            <img :src="item.sprites.front_default" style="width: 50px; filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.5));" :alt="item.name">        
-                            <p class="fs-6 m-0 pokemon-name">{{ item.name }}</p>
-                            <p class="fs-6 m-0 pe-2">Nr. {{ formatDexEntry(item.game_indices[2].game_index) }}</p>
+                        <div v-for="item in store.pokemons">
+                            <div class="pokemon-card px-1 d-flex justify-content-between bg-white align-items-center cursor-pointer" :class="activePokemon(item.id)" @click="changePokemon(item.id), activePokemon(item.id)">
+                                <img :src="item.sprites.front_default" style="width: 50px; filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.5));" :alt="item.name">        
+                                <p class="fs-6 m-0 pokemon-name">{{ item.name }}</p>
+                                <p class="fs-6 m-0 pe-2">Nr. {{ formatDexEntry(item.id) }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,6 +92,10 @@ ChartJS.register(
             Radar,
             AppHeader,
             AppLoader,
+        },
+        props: {
+            first: Number,
+            second: Number,
         },
         data(){
             return {
@@ -150,7 +156,7 @@ ChartJS.register(
             async getPokemons(){
                 try {
                     let requests = [];
-                    for(let i = 494; i <= 649; i++){
+                    for(let i = store.firstEntry; i <= store.lastEntry; i++){
                         requests.push(axios.get(store.apiUrl + i));
                     }
 
@@ -213,7 +219,7 @@ ChartJS.register(
                 }
             },
             changePokemon(entry){
-                const selectedPokemon = store.pokemons.find(pokemon => pokemon.game_indices && pokemon.game_indices[2].game_index === entry);
+                const selectedPokemon = store.pokemons.find(pokemon => pokemon.id && pokemon.id === entry);
                 if (selectedPokemon) {
                     this.activeIndex = store.pokemons.indexOf(selectedPokemon);
                     if (selectedPokemon.stats) {
@@ -243,7 +249,7 @@ ChartJS.register(
             });
             },
             activePokemon(entry){
-                if(store.pokemons[this.activeIndex].game_indices[2].game_index == entry){
+                if(store.pokemons[this.activeIndex].id == entry){
                     return 'bg-gray';
                 }
             },
@@ -265,7 +271,7 @@ ChartJS.register(
             this.getPokemons().then(() => {
                 if (store.pokemons.length > 0) {
                     // Imposta il primo Pokémon come attivo all'avvio
-                    this.changePokemon(store.pokemons[0].game_indices[2].game_index);
+                    this.changePokemon(store.pokemons[0].id);
                 }
             });
         }

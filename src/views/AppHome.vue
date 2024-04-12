@@ -5,7 +5,7 @@
             <div class="row h-75 my-5 py-5 mx-0">
                 <swiper :effect="'cards'" :grabCursor="true" :modules="modules" :loop="true" class="mySwiper h-100">
                     <swiper-slide v-for="item in regions" style="border-radius: 25px;">
-                        <router-link :regionName="item.label" @click="getRegionName(item.label)" :to="{ name: item.name }" class="text-decoration-none">
+                        <router-link :regionName="item.label" @click="getRegionName(item.label), chooseRegion(item.first, item.last)" :to='"/pokedex"' class="text-decoration-none">
                                 <div :class="item.name" class="w-100 h-100 region-bg">
                                     <div class="card-bg w-100 h-100 d-flex justify-content-center align-items-center">
                                         <p class="mt-5 pt-5 fs-1 text-white">{{ item.label }}</p>
@@ -49,51 +49,71 @@ import { EffectCards } from 'swiper/modules';
                         id: 1,
                         label: "Kanto",
                         name: "kanto",
+                        first: 1,
+                        last: 151,
                     },
                     {
                         id: 2,
                         label: "Johto",
                         name: "johto",
+                        first: 152,
+                        last: 251,
                     },
                     {
                         id: 3,
                         label: "Hoenn",
                         name: "hoenn",
+                        first: 252,
+                        last: 386,
                     },
                     {
                         id: 4,
                         label: "Sinnoh",
                         name: "sinnoh",
+                        first: 387,
+                        last: 493,
                     },
                     {
                         id: 5,
                         label: "Unova",
                         name: "unova",
+                        first: 494,
+                        last: 649,
                     },
                     {
                         id: 6,
                         label: "Kalos",
                         name: "kalos",
+                        first: 650,
+                        last: 721,
                     },
                     {
                         id: 7,
                         label: "Alola",
                         name: "alola",
+                        first: 722,
+                        last: 809,
                     },
                     {
                         id: 8,
                         label: "Galar",
                         name: "galar",
+                        first: 810,
+                        last: 898,
                     },
                     {
                         id: 9,
                         label: "Paldea",
                         name: "paldea",
+                        first: 906,
+                        last: 1010,
                     },
                     {
                         id: 10,
                         label: "National",
                         name: "national",
+                        first: 1,
+                        last: 1010,
                     }
                 ],
                 modules: [EffectCards],
@@ -104,6 +124,10 @@ import { EffectCards } from 'swiper/modules';
                 store.regionName = '';
                 store.regionName = name;
                 store.pokemons = [];
+            },
+            chooseRegion(firstEntry, lastEntry) {
+                store.firstEntry = firstEntry;
+                store.lastEntry = lastEntry;
             }
         },
         mounted(){
